@@ -1,0 +1,83 @@
+# Core
+# torch/torchvision versions are loosely pinned (lower bound only) rather than
+# exact-pinned, because exact patch-version wheel availability varies by
+# Python version/platform and breaks easily (as you just saw). pip will pick
+# a compatible torch+torchvision pair automatically as long as both are left
+# unpinned or bounded like this — do not pin torch and torchvision to
+# mismatched exact versions, they must be from the same PyTorch release.
+torch
+torchvision
+numpy
+pandas
+scikit-learn
+Pillow
+PyYAML
+
+# Approximate nearest neighbor (Phase 2)
+faiss-cpu        # on Colab with GPU you may instead install faiss-gpu-cu12 (uncomment/swap as needed)
+annoy
+
+# Text embeddings (Phase 2) — only needed if text_embedding_method: "sbert" in configs/phase2_config.yaml
+sentence-transformers
+
+# Plotting
+matplotlib
+seaborn
+
+# Utilities
+tqdm
+
+# Dataset download convenience (optional — you can also download manually from the Kaggle website)
+kaggle
+
+
+streamlit>=1.32.0
+
+
+*/Fine-tuning on 3773 training items (4 epochs x 1000 triplets/epoch)
+Unfroze blocks: ['layer4'] -> 14,964,736/23,508,032 trainable params
+Validation proxy: 500 gallery items, 100 queries, CategoryConsistency@5 (fixed subsample every epoch)
+Epoch 1/4  batch 63/63  loss=0.2568  elapsed=513s  eta=0sss
+Epoch 1/4 complete — loss: 0.2568 — 514.7s
+[val-proxy-gallery] extracted 500 embeddings of dim 2048 in 82.8s (165.55 ms/image)
+[val-proxy-query] extracted 100 embeddings of dim 2048 in 26.3s (262.85 ms/image)
+Exact k-NN index built on 500 items in 0.146s
+Validation proxy CategoryConsistency@5: 0.3980  (first epoch, sets initial best)
+New best checkpoint (epoch 1) saved -> C:\fashion_recommender_project\results\checkpoints\resnet50_triplet_finetuned.pt
+Epoch 2/4  batch 63/63  loss=0.1655  elapsed=490s  eta=0sss
+Epoch 2/4 complete — loss: 0.1655 — 493.3s
+[val-proxy-gallery] extracted 500 embeddings of dim 2048 in 80.7s (161.49 ms/image)
+[val-proxy-query] extracted 100 embeddings of dim 2048 in 29.2s (291.97 ms/image)
+Exact k-NN index built on 500 items in 0.037s
+Validation proxy CategoryConsistency@5: 0.4240  (best so far, was 0.3980)
+New best checkpoint (epoch 2) saved -> C:\fashion_recommender_project\results\checkpoints\resnet50_triplet_finetuned.pt
+Epoch 3/4  batch 63/63  loss=0.0954  elapsed=910s  eta=0sss
+Epoch 3/4 complete — loss: 0.0954 — 911.4s
+[val-proxy-gallery] extracted 500 embeddings of dim 2048 in 80.8s (161.53 ms/image)
+[val-proxy-query] extracted 100 embeddings of dim 2048 in 29.6s (296.28 ms/image)
+Exact k-NN index built on 500 items in 0.003s
+Validation proxy CategoryConsistency@5: 0.4520  (best so far, was 0.4240)
+New best checkpoint (epoch 3) saved -> C:\fashion_recommender_project\results\checkpoints\resnet50_triplet_finetuned.pt
+Epoch 4/4  batch 63/63  loss=0.0441  elapsed=2557s  eta=0ssss
+Epoch 4/4 complete — loss: 0.0441 — 2565.1s
+[val-proxy-gallery] extracted 500 embeddings of dim 2048 in 128.8s (257.67 ms/image)
+[val-proxy-query] extracted 100 embeddings of dim 2048 in 64.9s (648.72 ms/image)
+Exact k-NN index built on 500 items in 0.084s
+Validation proxy CategoryConsistency@5: 0.4660  (best so far, was 0.4520)
+New best checkpoint (epoch 4) saved -> C:\fashion_recommender_project\results\checkpoints\resnet50_triplet_finetuned.pt
+
+Best epoch: 4 (val proxy CategoryConsistency@5 = 0.4660)
+Best checkpoint: C:\fashion_recommender_project\results\checkpoints\resnet50_triplet_finetuned.pt
+Last epoch's checkpoint (may differ from best): C:\fashion_recommender_project\results\checkpoints\resnet50_triplet_last_epoch.pt
+Saved training log to C:\fashion_recommender_project\results\logs\phase2_training_log.csv
+ epoch  avg_triplet_loss  epoch_time_s  val_proxy_category_consistency
+     1          0.256826    514.699133                           0.398
+     2          0.165485    493.266482                           0.424
+     3          0.095364    911.370926                           0.452
+     4          0.044107   2565.066317                           0.466
+Best checkpoint: C:\fashion_recommender_project\results\checkpoints\resnet50_triplet_finetuned.pt
+Last-epoch checkpoint (for comparison/debugging): C:\fashion_recommender_project\results\checkpoints\resnet50_triplet_last_epoch.pt
+Training log: C:\fashion_recommender_project\results\logs\phase2_training_log.csv
+
+Next step: python scripts/extract_embeddings.py --split all --tag finetuned --checkpoint C:\fashion_recommender_project\results\checkpoints\resnet50_triplet_finetuned.pt
+(venv) PS C:\fashion_recommender_project\scripts> /*

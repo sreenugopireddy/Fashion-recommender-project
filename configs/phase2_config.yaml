@@ -1,0 +1,24 @@
+# Phase 2 configuration — triplet fine-tuning, image+text fusion, ANN search
+
+# Triplet fine-tuning
+triplet_margin: 0.3
+triplet_mining: "random"        # "random" (default, wired in) or "semi_hard" (see src/finetune.py)
+finetune_epochs: 4
+finetune_lr: 0.00001
+finetune_batch_size: 16
+triplets_per_epoch: 1000
+unfreeze_last_n_blocks: 1        # 1 = only layer4 is trainable
+
+# Text embedding / fusion
+text_embedding_method: "tfidf"   # "tfidf" (no extra download) or "sbert"
+sbert_model_name: "all-MiniLM-L6-v2"
+tfidf_max_features: 512
+fusion_image_weight: 0.7         # tune on validation split only
+fusion_text_weight: 0.3
+
+# Approximate nearest neighbor
+ann_backend: "faiss"             # "faiss" or "annoy"
+faiss_index_type: "IndexIVFFlat" # or "IndexFlatIP" for exact search
+faiss_nlist: 100                 # IndexIVFFlat only
+faiss_nprobe: 10                 # IndexIVFFlat only
+annoy_n_trees: 50

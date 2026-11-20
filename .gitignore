@@ -1,0 +1,23 @@
+# Dataset (you add this — never commit product images/metadata)
+data/images/
+data/styles.csv
+data/metadata/
+data/splits/
+data/processed/
+
+# All generated results/artifacts
+results/
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+*.egg-info/
+
+# Environment
+.venv/
+venv/
+.env
+
+# OS
+.DS_Store

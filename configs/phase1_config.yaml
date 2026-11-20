@@ -1,0 +1,36 @@
+# Phase 1 configuration — pretrained ResNet50 + exact k-NN baseline
+seed: 42
+
+# Dataset column mapping — maps YOUR CSV's raw column names to the
+# canonical "id"/"articleType" names the rest of the codebase expects
+# (data_loader.load_raw_metadata() does the rename).
+#
+# Currently set for: Clothing dataset (full, high resolution) — agrigorev
+#   https://www.kaggle.com/datasets/agrigorev/clothing-dataset-full
+#   CSV columns: image, sender_id, label, kids  (no title/text field)
+#
+# For Fashion Product Images (Small) instead, use:
+#   dataset_id_col: "id"
+#   dataset_category_col: "articleType"
+#   dataset_has_title_column: true
+dataset_id_col: "image"
+dataset_category_col: "label"
+dataset_has_title_column: false   # no product-title text in this dataset -> Phase 2 fusion is skipped
+
+# Data split
+min_samples_per_category: 10   # categories with fewer items are dropped (can't stratify)
+train_fraction: 0.70
+val_fraction: 0.15
+test_fraction: 0.15
+
+# Image preprocessing / embedding
+image_size: 224
+batch_size: 128
+num_workers: 2
+
+# Retrieval / evaluation
+k_values: [1, 5, 10]
+k_max: 20
+map_k_values: [10, 20]
+category_consistency_k_values: [5, 10]
+relevance_protocol: "A"   # "A" = articleType match
